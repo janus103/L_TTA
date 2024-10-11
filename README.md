@@ -10,13 +10,13 @@ model’s backbone, with only the stem layer participating in the TTA process. T
   <img src="assets/NeurIPS_presentation.jpg" />
 </p>
 
-## Pytorch Implementation
+## Environment Setup and Installation Guide
 ### Installation
 
-Easy conda environment setting: you only need to import robust2.yml.
+Easy conda environment setting: you only need to import robust2.yaml.
 
 ```
- $ conda env create --name robust2 --file=robust2.yml
+ $ conda env create --name robust2 --file=robust2.yaml
  $ conda activate robust2
 ```
 
@@ -31,34 +31,54 @@ The easiest way to install pytorch_wavelets for DWT operations (i.e., 2D)
 ## How to TTA
 
 ### TTA
-You can easily perform the TTA process with the bash command below.
+You can easily perform the TTA process with the script files
 Only by changing the code in brackets
 
-+ CIFAR-10-C Download Link: (https://zenodo.org/records/2535967)
-+ ImageNet-C Download Link: (https://zenodo.org/records/2235448)
+## Data Preparation
 
-+ ResNet-26 Model (CIFAR-10-C) ResNet-50 Model (ImageNet-C) Download Link: (https://zenodo.org/records/13917882)
++ [Dataset] CIFAR-10-C 
+    ++ Download Link: (https://zenodo.org/records/2535967)
++ [Dataset] ImageNet-C 
+    ++ Download Link: (https://zenodo.org/records/2235448)
 
-+ modify
-    + dataset path 
-        + ex) /home/users/~
-    + epochs
-        + ex) 1 # only 1
-    + SE BLOCK OPT
-        + ex) 1 321 0
-    + DWT_KERNEL_SIZE
-        + ex) 3 3 3
-    + DWT_LEVEL
-        + ex) 2 2 2
-    + ITERATION FOR TTA
-        + ex) 0 ~ 
++ [Pretrained Model] ResNet-26 Model (CIFAR-10-C) and ResNet-50 Model (ImageNet-C) 
+    ++ Download Link: (https://zenodo.org/records/13917882)
+
++ Template
 ```
-CUDA_VISIBLE_DEVICES=[GPU] python train_dwt_tta_se.py [CORRUPTION_DATASET] --dwt-kernel-size  [DWT_KERNEL_SIZE] --dwt_level [DWT_LEVEL] --dwt_bn [SE BLOCK OPT] --model resnet26_dwt_se --lr 0.05 --epochs 1 --sched cosine -b 128 -j 5 --val-split val --input-size 3 224 224 --output TEST --num-classes 10 --experiment TEST --no-prefetcher --resume [CHECK_POINT] --ada 1 --lbatch [ITERATION FOR TTA]
+bash [SCRIPT_FILE] [NUM_ITER] [GPU_NUM] [SEED] [RESULT_CSV_PATH] [WEIGHT_FILE] [CORRUPTED_IMG_ROOT]
 ```
 
-+ Example of TTA 
++ ImageNet-C on ResNet50
 ```
-CUDA_VISIBLE_DEVICES=0 python train_dwt_tta_se.py /home/datasets/test-C-10/gaussian_noise_5 --dwt-kernel-size  3 3 3 --dwt_level 2 2 2 --dwt_bn 1 321 0 --model resnet26_dwt_se --lr 0.05 --epochs 1 --sched cosine -b 128 -j 5 --val-split val --input-size 3 224 224 --output TEST --num-classes 10 --experiment TEST --no-prefetcher --resume weight/model_best.pth.tar --ada 1 --lbatch 75
+# DEL + GCAL
+bash scripts/imgnet_r50_del_gcal.sh 0 10 42 L_TTA_R50_ImgNet_Results ResNet50/L_TTA.pth.tar /home/dataset/imagenet-c
+
+# GCAL Only
+bash scripts/imgnet_r50_gcal.sh 0 10 42 L_TTA_GCAL_ONLY_R50_ImgNet_Results ResNet50/L_TTA_SE_ONLY.pth.tar /home/dataset/imagenet-c
+
+```
++ CIFAR-10-C on ResNet26
+```
+# DEL + GCAL
+bash scripts/imgnet_r26_del_gcal.sh 1 20 42 L_TTA_R26_C10_Results ResNet26/L_TTA.pth.tar /home/dataset/test-C-10
+
+# GCAL Only
+bash scripts/imgnet_r26_gcal.sh 1 20 42 L_TTA_GCAL_ONLY_R26_C10_Results ResNet26/L_TTA_SE_ONLY.pth.tar /home/dataset/test-C-10
+```
+
+## Citation
+
+If you find this repository helpful in your research, please consider citing our paper:
+```bibtex
+@inproceedings{
+anonymous2024ltta,
+title={L-{TTA}: Lightweight Test-Time Adaptation Using a Versatile Stem Layer},
+author={Anonymous},
+booktitle={The Thirty-eighth Annual Conference on Neural Information Processing Systems},
+year={2024},
+url={https://openreview.net/forum?id=G7NZljVOol}
+}
 ```
 
 ## Acknowledgments

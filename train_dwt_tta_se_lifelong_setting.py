@@ -468,7 +468,10 @@ def main():
     
     optimizer = create_optimizer_v2(model, **optimizer_kwargs(cfg=args))
 
-    corruption_style=args.data_dir.split('/')[-2]
+    if int(args.num_classes) == 10:
+        corruption_style=args.data_dir.split('/')[-1]
+    else:
+        corruption_style=args.data_dir.split('/')[-2]
 
     # create the train and eval datasets
     dataset_train = create_dataset(

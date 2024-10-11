@@ -2,4 +2,6 @@
 *.pth.tar
 .gitattributes
 
-__pycache__
+__pycache__/*
+timm/*
+*.pyc
