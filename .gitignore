@@ -1,2 +1,5 @@
 *.tar
 *.pth.tar
+.gitattributes
+
+__pycache__
