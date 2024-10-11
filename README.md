@@ -1,14 +1,14 @@
 # L-TTA: Lightweight Test-Time Adaptation Using a Versatile Stem Layer (NeurIPS 2024)
 This repository provides the official PyTorch implementation of the following paper:
 
-> **Abstract:** 
-*Test-time adaptation (TTA) is the most realistic methodology for adapting deep learning models to the real world using only unlabeled data from the target domain. Numerous TTA studies in deep learning have aimed at minimizing entropy. However, this necessitates forward/backward processes across the entire model and is limited by the incapability to fully leverage data based solely on entropy. This study presents a groundbreaking TTA solution that involves a departure from the conventional focus on minimizing entropy. Our innovative approach uniquely remodels the stem
-layer (i.e., the first layer) to emphasize minimizing a new learning criterion, namely, uncertainty. This method requires minimal involvement of the
-model’s backbone, with only the stem layer participating in the TTA process. This approach significantly reduces the memory required for training and enables rapid adaptation to the target domain with minimal parameter updates. Moreover, to maximize data utility, the stem layer applies a discrete wavelet transform to the input features. It extracts multi-frequency domains and focuses on minimizing their individual uncertainties. The proposed method integrated into ResNet-26 and ResNet-50 models demonstrates its robustness by achieving state-of-the-art TTA performance while using the least amount of memory compared to existing studies on CIFAR-10-C, CIFAR-100-C, and Cityscapes-C benchmark datasets.*
-
 <p align="center">
   <img src="assets/NeurIPS_presentation.jpg" />
 </p>
+
+## **Abstract:** 
+*Test-time adaptation (TTA) is the most realistic methodology for adapting deep learning models to the real world using only unlabeled data from the target domain. Numerous TTA studies in deep learning have aimed at minimizing entropy. However, this necessitates forward/backward processes across the entire model and is limited by the incapability to fully leverage data based solely on entropy. This study presents a groundbreaking TTA solution that involves a departure from the conventional focus on minimizing entropy. Our innovative approach uniquely remodels the stem
+layer (i.e., the first layer) to emphasize minimizing a new learning criterion, namely, uncertainty. This method requires minimal involvement of the
+model’s backbone, with only the stem layer participating in the TTA process. This approach significantly reduces the memory required for training and enables rapid adaptation to the target domain with minimal parameter updates. Moreover, to maximize data utility, the stem layer applies a discrete wavelet transform to the input features. It extracts multi-frequency domains and focuses on minimizing their individual uncertainties. The proposed method integrated into ResNet-26 and ResNet-50 models demonstrates its robustness by achieving state-of-the-art TTA performance while using the least amount of memory compared to existing studies on CIFAR-10-C, CIFAR-100-C, and Cityscapes-C benchmark datasets.*
 
 ## Environment Setup and Installation Guide
 ### Installation
@@ -34,15 +34,15 @@ The easiest way to install pytorch_wavelets for DWT operations (i.e., 2D)
 You can easily perform the TTA process with the script files
 Only by changing the code in brackets
 
-## Data Preparation
+### Data Preparation
 
 + [Dataset] CIFAR-10-C 
-    ++ Download Link: (https://zenodo.org/records/2535967)
+    + Download Link: (https://zenodo.org/records/2535967)
 + [Dataset] ImageNet-C 
-    ++ Download Link: (https://zenodo.org/records/2235448)
+    + Download Link: (https://zenodo.org/records/2235448)
 
 + [Pretrained Model] ResNet-26 Model (CIFAR-10-C) and ResNet-50 Model (ImageNet-C) 
-    ++ Download Link: (https://zenodo.org/records/13917882)
+    + Download Link: (https://zenodo.org/records/13917882)
 
 + Template
 ```
