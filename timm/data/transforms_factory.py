@@ -160,7 +160,6 @@ def transforms_imagenet_eval(
         post_dwt=False,
         enable_aux=False,
 ):
-    print('transform is evaluation {}'.format(post_dwt))
     crop_pct = crop_pct or DEFAULT_CROP_PCT
 
     if isinstance(img_size, (tuple, list)):
@@ -271,29 +270,8 @@ def create_transform(
         dataset_alias="imagenet"):
     
     if dataset_alias=="imagenet":
-        print('(2)dataset_alias {}'.format(dataset_alias))
         mean = IMAGENET_DEFAULT_MEAN
         std = IMAGENET_DEFAULT_STD
-    elif dataset_alias=="pacs":
-        print('(2)dataset_alias {}'.format(dataset_alias))
-        mean = PACS_TOTAL_DEFAULT_MEAN
-        std = PACS_TOTAL_DEFAULT_STD
-    elif dataset_alias=="photo":
-        print('(2)dataset_alias {}'.format(dataset_alias))
-        mean = PACS_PHOTO_DEFAULT_MEAN
-        std = PACS_PHOTO_DEFAULT_STD
-    elif dataset_alias=="art":
-        print('(2)dataset_alias {}'.format(dataset_alias))
-        mean = PACS_ART_DEFAULT_MEAN
-        std = PACS_ART_DEFAULT_STD
-    elif dataset_alias=="cartoon":
-        print('(2)dataset_alias {}'.format(dataset_alias))
-        mean = PACS_CARTOON_DEFAULT_MEAN
-        std = PACS_CARTOON_DEFAULT_STD
-    elif dataset_alias=="sketch":
-        print('(2)dataset_alias {}'.format(dataset_alias))
-        mean = PACS_SKETCH_DEFAULT_MEAN
-        std = PACS_SKETCH_DEFAULT_STD
     else:
         mean = IMAGENET_DEFAULT_MEAN
         std = IMAGENET_DEFAULT_STD

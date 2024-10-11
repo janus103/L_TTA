@@ -4,4 +4,4 @@
 
 __pycache__/*
 timm/*
-*.pyc
+**/*.pyc

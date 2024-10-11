@@ -231,7 +231,6 @@ def create_loader(
         dataset_alias="imagenet",
         enable_aux=False,
 ):
-    print(f'Post DWT = {post_dwt} ')
     re_num_splits = 0
     if re_split:
         # apply RE to second half of batch if no aug split otherwise line up with aug split
@@ -347,8 +346,6 @@ def create_loader(
             re_count=re_count,
             re_num_splits=re_num_splits
         )
-    else:
-        print('(x no-pass)Use No Prefetcher')
 
     return loader
 

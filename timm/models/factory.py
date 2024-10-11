@@ -136,7 +136,7 @@ def create_model(
                 **kwargs,
             )
 
-    print('@@@@@@@@@@@@@@@@@@@@ checkpoint_pth {}'.format(checkpoint_path))
+    # print('@@@@@@@@@@@@@@@@@@@@ checkpoint_pth {}'.format(checkpoint_path))
 
     if checkpoint_path:
         load_checkpoint(model, checkpoint_path)

@@ -177,7 +177,7 @@ class MCImageDataset(data.Dataset):
                 split=split,
                 class_map=class_map
             )
-        print('@@@@@@@@@@@@@ MC Datasets')
+        # print('@@@@@@@@@@@@@ MC Datasets')
         self.reader = reader
         self.load_bytes = load_bytes
         self.img_mode = img_mode

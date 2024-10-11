@@ -252,13 +252,9 @@ def create_optimizer_v2(
     if opt_lower == 'sgd' or opt_lower == 'nesterov':
         # NOTE 'sgd' refers to SGD + nesterov momentum for legacy / backwards compat reasons
         opt_args.pop('eps', None)
-        #print('@@@@@@@@@@@ First Optimization ') # Here
-        #print('@@@@@@@@@@@ First Parameters {} '.format(parameters))
-        print('@@@@@@@@@@@ First opt_args {} '.format(opt_args))
         optimizer = optim.SGD(parameters, momentum=momentum, nesterov=True, **opt_args)
     elif opt_lower == 'momentum':
         opt_args.pop('eps', None)
-        #print('@@@@@@@@@@@ Second Optimization')
         optimizer = optim.SGD(parameters, momentum=momentum, nesterov=False, **opt_args)
     elif opt_lower == 'sgdp':
         optimizer = SGDP(parameters, momentum=momentum, nesterov=True, **opt_args)

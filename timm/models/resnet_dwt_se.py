@@ -600,18 +600,19 @@ class ResNet_DWT_SE(nn.Module):
                     self.nll_loss.append(nll_loss_)         
         else:
             x = self.DEL(x) # GCAL Processing with DEL
-                
-        x = self.bn1(x)
-        x = self.act1(x)
-        x = self.maxpool(x)
+        
+        with torch.no_grad():
+            x = self.bn1(x)
+            x = self.act1(x)
+            x = self.maxpool(x)
 
-        if self.grad_checkpointing and not torch.jit.is_scripting():
-            x = checkpoint_seq([self.layer1, self.layer2, self.layer3, self.layer4], x, flatten=True)
-        else:
-            x = self.layer1(x)
-            x = self.layer2(x)
-            x = self.layer3(x)
-            x = self.layer4(x)
+            if self.grad_checkpointing and not torch.jit.is_scripting():
+                x = checkpoint_seq([self.layer1, self.layer2, self.layer3, self.layer4], x, flatten=True)
+            else:
+                x = self.layer1(x)
+                x = self.layer2(x)
+                x = self.layer3(x)
+                x = self.layer4(x)
         return x
     
     def forward_head(self, x, pre_logits: bool = False):
@@ -638,6 +639,7 @@ class ResNet_DWT_SE(nn.Module):
             self.disable_grad_sequential(self.layer2)
             self.disable_grad_sequential(self.layer3)
             self.disable_grad_sequential(self.layer4)
+            self.disable_grad_item(self.fc)
             x = self.forward_features(x)
         else:
             x = self.forward_features(x)

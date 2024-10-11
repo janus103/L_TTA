@@ -416,7 +416,6 @@ def main():
     elif args.input_size is not None:
         in_chans = args.input_size[0]
 
-    print('########### pretrained ###########', args.pretrained)
     model = create_model(
         args.model,
         pretrained=args.pretrained,
@@ -623,6 +622,17 @@ def main():
                 )
             else:
                 print('Passed Function: [train_one_epoch]')
+                model.eval()
+                eval_metrics, _, _ = validate(
+                            model,
+                            loader_eval,
+                            validate_loss_fn,
+                            -999, #
+                            args,
+                        )
+                print(f'batch_idx {0} => eval_merics {eval_metrics} met type ={type(eval_metrics)}')
+                eval_lst=list()
+                eval_lst.append(eval_metrics)
 
     except KeyboardInterrupt:
         pass
@@ -681,6 +691,8 @@ def train_one_epoch(
     for batch_idx, (input, target) in enumerate(loader):
         ### Start Validatioin ###
         if batch_idx != 0 and batch_idx % args.lbatch == 0 or batch_idx == (total_batch_size-1):
+            # print(torch.equal(fixed_model.layer2[0].conv1.weight, model.layer2[0].conv1.weight))  # True
+            # print(fixed_model.global_pool)
             model.eval()
             eval_metrics, _, _ = validate(
                         model,
@@ -742,21 +754,17 @@ def validate(
 
     model.eval()
 
-    if args.dwt_level[0] == 1:
-        split_count = 4
-    elif args.dwt_level[0] == 2:
-        split_count = 16
-    else:
-        split_count = 0
-
     with torch.no_grad():
         print(f'In Validation process => {batch_idx_t - args.lbatch} ~ {batch_idx_t}')
         
         for batch_idx, (input, target) in enumerate(loader):
-            if batch_idx < batch_idx_t - args.lbatch:
-                continue
-            elif batch_idx > batch_idx_t:
-                break
+            if batch_idx_t == -999: # ada == 0 == 'without TTA'
+                pass
+            else:
+                if batch_idx < batch_idx_t - args.lbatch:
+                    continue
+                elif batch_idx > batch_idx_t:
+                    break
 
             if not args.prefetcher:
                 input = input.to(device)
@@ -786,9 +794,6 @@ def validate(
 
             top1_m.update(acc1.item(), output.size(0))
             top5_m.update(acc5.item(), output.size(0))        
-        
-    if args.dwt_level[0] == 0:
-        return top1_m.avg, -1, -1
     
     if args.model.startswith('resnet') and args.model != 'resnet50':
         return top1_m.avg, _, _
