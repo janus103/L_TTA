@@ -46,7 +46,7 @@ Only by changing the code in brackets
 
 + Template
 ```
-bash [SCRIPT_FILE] [NUM_ITER] [GPU_NUM] [SEED] [RESULT_CSV_PATH] [WEIGHT_FILE] [CORRUPTED_IMG_ROOT]
+bash [SCRIPT_FILE] [GPU_NUM] [NUM_ITER] [SEED] [RESULT_CSV_PATH] [WEIGHT_FILE] [CORRUPTION_IMG_ROOT]
 ```
 
 + ImageNet-C on ResNet50

@@ -3,5 +3,7 @@
 .gitattributes
 
 __pycache__/*
-timm/*
+**/*.pyc
+**/**/**/*.pyc
+**/**/*.pyc
 **/*.pyc
