@@ -686,13 +686,12 @@ def train_one_epoch(
     fixed_model = model_copy_from_original(model)
 
     end = time.time()
-    pivot = args.lbatch + 1 # Evaluation Time
+    iteration = -1
     eval_met_lst = []
     for batch_idx, (input, target) in enumerate(loader):
         ### Start Validatioin ###
         if batch_idx != 0:
-            if batch_idx % pivot == 0:
-                # print(torch.equal(fixed_model.layer2[0].conv1.weight, model.layer2[0].conv1.weight))  # True
+            if iteration % args.lbatch == 0:
                 model.eval()
                 eval_metrics, _, _ = validate(
                             model,
@@ -701,11 +700,17 @@ def train_one_epoch(
                             batch_idx,
                             args,
                         )
-                print(f'batch_idx {batch_idx} => eval_merics {eval_metrics} met type ={type(eval_metrics)}')
+                print(f'Accuracy (%) = {eval_metrics} / Type of metric = {type(eval_metrics)}')
                 
                 eval_met_lst.append(eval_metrics)
-                model = model_copy_from_original(fixed_model)
+                
+                #Re-initialization
+                model = model_copy_from_original(fixed_model)  
+                iteration = -1
         ### Finish Validatioin ###
+
+        iteration = iteration + 1
+        
         model.train()
         
         data_time_m.update(time.time() - end)
@@ -755,17 +760,9 @@ def validate(
     model.eval()
 
     with torch.no_grad():
-        print(f'In Validation process => {batch_idx_t} ~ {batch_idx_t + args.lbatch}')
+        print(f'In Validation process Start')
         
         for _, (input, target) in enumerate(loader):
-            # if batch_idx_t == -999: # ada == 0 == 'without TTA'
-            #     pass
-            # else:
-            #     if batch_idx < batch_idx_t - args.lbatch:
-            #         continue
-            #     elif batch_idx > batch_idx_t:
-            #         break
-
             if not args.prefetcher:
                 input = input.to(device)
                 target = target[0].to(device)
