@@ -28,11 +28,11 @@ The easiest way to install pytorch_wavelets for DWT operations (i.e., 2D)
  $ pip install .
 ```
 
-## How to TTA
+## Usage
 
 ### TTA
 You can easily perform the TTA process with the script files
-Only by changing the code in brackets
+Only by changing the code in [brackets]
 
 ### Data Preparation
 
@@ -48,6 +48,8 @@ Only by changing the code in brackets
 ```
 bash [SCRIPT_FILE] [GPU_NUM] [NUM_ITER] [SEED] [RESULT_CSV_PATH] [WEIGHT_FILE] [CORRUPTION_IMG_ROOT]
 ```
+
+### Adaptation Scripts
 
 + ImageNet-C on ResNet50
 ```
@@ -72,12 +74,10 @@ bash scripts/imgnet_r26_gcal.sh 1 20 42 L_TTA_GCAL_ONLY_R26_C10_Results ResNet26
 If you find this repository helpful in your research, please consider citing our paper:
 ```bibtex
 @inproceedings{
-anonymous2024ltta,
-title={L-{TTA}: Lightweight Test-Time Adaptation Using a Versatile Stem Layer},
-author={Anonymous},
-booktitle={The Thirty-eighth Annual Conference on Neural Information Processing Systems},
-year={2024},
-url={https://openreview.net/forum?id=G7NZljVOol}
+@inproceedings{shintta,
+  title={L-TTA: Lightweight Test-Time Adaptation Using a Versatile Stem Layer},
+  author={Shin, Jin and Kim, Hyun},
+  booktitle={The Thirty-eighth Annual Conference on Neural Information Processing Systems}
 }
 ```
 
